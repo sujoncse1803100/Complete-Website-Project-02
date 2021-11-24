@@ -23,7 +23,7 @@ if (!firebase.apps.length) {
 
 const Login = () => {
 
-    const [userLoggedIn, setUserLoggedIn] = useContext(UserContext);
+    const [loggedInsUser, setLoggedInUser] = useContext(UserContext);
     const [user, setUser] = useState({
         displayName: '',
         email: '',
@@ -39,10 +39,10 @@ const Login = () => {
     let { from } = location.state || { from: { pathname: "/" } };
 
     const handleResponse = (res, redirects) => {
-        setUserLoggedIn(res);
+        setLoggedInUser(res);
         setUser(res);
         if (redirects) {
-            // history.replace(from);
+            history.replace(from);
         }
     }
 
@@ -97,8 +97,6 @@ const Login = () => {
                 <img style={{ height: '40px' }} src={logo} alt="" />
             </div>
 
-            <h1>Email : { user.email }</h1>
-            
             <div className="card mt-5 col-md-4 col-sm-6  myCard" style={cardStyle}>
                 <div style={makeCenter} className="d-flex align-items-center">
                     <div style={{ width: '90%', margin: '0 auto' }} >

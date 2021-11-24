@@ -11,7 +11,7 @@ const HeaderMain = () => {
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio expedita deserunt at eaque, illo, eos ea eius, in nesciunt nam ducimus officia voluptates ipsum dignissimos aspernatur praesentium commodi sit natus.
                     </p>
-                    <Link className=" text-dark" style={{ textDecoration: 'none' }} to="/">
+                    <Link className=" text-dark" style={{ textDecoration: 'none' }} to="/order">
                         <button style={{ width: '150px', backgroundColor: '#111430' }} className="btn rounded btn-primary">Hire Us</button>
                     </Link>
                 </div>
