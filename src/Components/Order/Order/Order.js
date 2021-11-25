@@ -31,6 +31,10 @@ export const Order = () => {
     formData.append("orderName", info.orderName);
     formData.append("projectDetails", info.projectDetails);
     formData.append("price", info.price);
+    formData.append("selectedStatus", 'Pending');
+    formData.append("secondStatus", 'Done');
+    formData.append("thirdStatus", 'Ongoing');
+    formData.append("statusColor", "red");
 
     fetch("http://localhost:3001/createOrder", {
       method: "POST",
@@ -80,13 +84,6 @@ export const Order = () => {
               </div>
 
               <div class="form-group mt-2">
-                {/* <input
-                  onBlur={handleBlur}
-                  type="text"
-                  class="form-control"
-                  name="orderName"
-                  placeholder="Order name"
-                /> */}
 
                 <select
                   placeholder="Order name"
