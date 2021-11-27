@@ -1,26 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { OS_Header } from "../../Shared/OS_Header/OS_Header";
 import { OrderSidebar } from "../OrderSidebar/OrderSidebar";
-import service1 from "../../../images/icons/service1.png";
-import service2 from "../../../images/icons/service2.png";
 import { OrderDetails } from "./OrderDetails";
 import { UserContext } from "../../../App";
-
-// const orderList = [
-//   {
-//     icon: service1,
-//     title: "Web & Mobile Design",
-//     description:
-//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed cumque consequuntur dolorum eius harum id rem, perferendis saepe impedit voluptatem?",
-//   },
-//   {
-//     icon: service2,
-//     title: "Graphic Design",
-//     description:
-//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed cumque consequuntur dolorum eius harum id rem, perferendis saepe impedit voluptatem?",
-//   }
-
-// ];
 
 export const OrderList = () => {
   const [loggedInsUser, setLoggedInUser] = useContext(UserContext);

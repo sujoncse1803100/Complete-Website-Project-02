@@ -4,7 +4,7 @@ import { ServiceSidebar } from "../ServiceSidebar/ServiceSidebar";
 
 export const Service = () => {
   const [services, setServices] = useState([]);
-  const [id, setId] = useState();
+  const [id, setId] = useState('abcdesfghsdjf7e');
   const [updatedData, setUpdatedData] = useState({
     selectedStatus: "",
     secondStatus: "",
