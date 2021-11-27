@@ -112,6 +112,7 @@ const Login = () => {
                             </div>
                         </button>
                         <p >Don't have account ? <span style={{ color: 'green' }}><Link to='/login'>create an account</Link></span></p>
+                        <p >Go back to <span ><Link style={{ color: 'red',textDecoration:'none' }} to='/'> home</Link></span></p>
                     </div>
                 </div>
             </div>

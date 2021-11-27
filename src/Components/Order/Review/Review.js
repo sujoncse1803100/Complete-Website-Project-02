@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { OS_Header } from "../../Shared/OS_Header/OS_Header";
 import { OrderSidebar, ServiceSidebar } from "../OrderSidebar/OrderSidebar";
 import "../Order.css";
+import { UserContext } from "../../../App";
 
 export const Review = () => {
-  const [info, setInfo] = useState({});
-  const [file, setFile] = useState(null);
+  const [loggedInUsr,setLoggedInUser] = useContext(UserContext);
+  const [info, setInfo] = useState({
+    name : loggedInUsr.displayName,
+    photoURL: loggedInUsr.photoURL
+  });
 
   const handleBlur = (e) => {
     const newInfo = { ...info };
@@ -13,33 +17,23 @@ export const Review = () => {
     setInfo(newInfo);
   };
 
-  const handleFileChange = (e) => {
-    const newFile = e.target.files[0];
-    setFile(newFile);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("name", info.name);
-    formData.append("email", info.email);
-    formData.append("phone", info.phone);
-
-    // fetch('https://stark-shore-06055.herokuapp.com/addDoctors', {
-    //     method: 'POST',
-    //     body: formData
-    // })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         if (data) {
-    //             alert('Doctor added successfully');
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.error(error)
-    //     })
+    fetch('https://damp-eyrie-90120.herokuapp.com/addReview', {
+        method: 'POST',
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(info),
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                alert('Thanks for review');
+            }
+        })
+        .catch(error => {
+            console.error(error)
+        })
   };
 
   return (
@@ -57,45 +51,42 @@ export const Review = () => {
             <form onSubmit={handleSubmit} className="me-5 pe-5 w-100">
               <div class="form-group mt-2">
                 <label>Service Title</label>
-                <input
+                <select
+                  placeholder="Order name"
+                  className="form-control"
+                  name="orderName"
                   onBlur={handleBlur}
-                  type="text"
-                  class="form-control"
-                  name="name"
-                  placeholder="Title"
-                />
+                >
+                  <option value="Select service" disabled selected>Select your service</option>
+                  <option value="Mobile & Mobile Develoment">Web & Mobile Develoment</option>
+                  <option value="Graphic Design">Graphic Design</option>
+                  <option value="Web Develoment">Web Develoment</option>
+                  <option value="Android Develoment">Android Develoment</option>
+                  <option value="Search Engine Optimization">Search Engine Optimization</option>
+                </select>
               </div>
 
               <div class="form-group mt-2">
                 <label>Description</label>
                 <textarea
                   onBlur={handleBlur}
-                  placeholder="Your message"
+                  placeholder="What's your mind ?"
                   class="form-control"
-                  name="textarea"
-                  id="textarea"
+                  name="description"
+                  id="description"
                   type="text"
                   cols="20"
                   rows="5"
                 ></textarea>
               </div>
 
-              <div class="form-group mt-2">
-                <label for="exampleInputPassword">Icon</label>
-                <input
-                  onChange={handleFileChange}
-                  type="file"
-                  class="form-control"
-                  id="file"
-                />
-              </div>
-              <button
+              <input
                 style={{ width: "150px" }}
                 type="submit"
+                value="Submit"
                 class="btn btn-success mt-5"
-              >
-                Add
-              </button>
+              />
+                
             </form>
           </div>
         </div>

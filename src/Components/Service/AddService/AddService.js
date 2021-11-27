@@ -27,7 +27,7 @@ export const AddService = () => {
     formData.append("title", info.title);
     formData.append("desc", info.desc);
 
-    fetch('http://localhost:3001/addService', {
+    fetch('https://damp-eyrie-90120.herokuapp.com/addService', {
         method: 'POST',
         body: formData
     })

@@ -18,7 +18,7 @@ export const MakeAdmin = () => {
     const formData = new FormData();
     formData.append("email", info.email);
 
-    fetch('http://localhost:3001/makeAdmin', {
+    fetch('https://damp-eyrie-90120.herokuapp.com/makeAdmin', {
         method: 'POST',
         body: formData
     })

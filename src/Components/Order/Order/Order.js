@@ -36,7 +36,7 @@ export const Order = () => {
     formData.append("thirdStatus", 'Ongoing');
     formData.append("statusColor", "red");
 
-    fetch("http://localhost:3001/createOrder", {
+    fetch("https://damp-eyrie-90120.herokuapp.com/createOrder", {
       method: "POST",
       body: formData,
     })
@@ -91,7 +91,7 @@ export const Order = () => {
                   name="orderName"
                   onBlur={handleBlur}
                 >
-                  <option value="Select service">Select service</option>
+                  <option value="Select service" disabled selected>Select service</option>
                   <option value="Mobile & Mobile Develoment">Web & Mobile Develoment</option>
                   <option value="Graphic Design">Graphic Design</option>
                   <option value="Web Develoment">Web Develoment</option>

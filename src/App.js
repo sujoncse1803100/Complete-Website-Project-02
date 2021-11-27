@@ -19,15 +19,22 @@ function App() {
   const [loggedInsUser, setLoggedInUser] = useState({});
   const [admin, setAdmin] = useState(false);
 
-  useEffect(() => {
-    fetch("http://localhost:3001/isAdmin", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ email: loggedInsUser.email }),
-    })
-      .then((response) => response.json())
-      .then((result) => setAdmin(result));
-  }, [loggedInsUser]);
+  try{
+    useEffect(() => {
+      fetch("https://damp-eyrie-90120.herokuapp.com/isAdmin", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email: loggedInsUser.email }),
+      })
+        .then((response) => response.json())
+        .then((result) => setAdmin(result))
+        .catch(err=> {
+          // alert(err)
+        })
+    }, [loggedInsUser]);
+  }catch(err){
+    alert(err);
+  }
 
   return (
     <UserContext.Provider value={[loggedInsUser, setLoggedInUser]}>

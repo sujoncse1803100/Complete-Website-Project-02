@@ -4,77 +4,87 @@ import { ServiceSidebar } from "../ServiceSidebar/ServiceSidebar";
 
 export const Service = () => {
   const [services, setServices] = useState([]);
-  const [id, setId] = useState(null);
+  const [id, setId] = useState();
   const [updatedData, setUpdatedData] = useState({
-    selectedStatus : '',
-    secondStatus : '',
-    thirdStatus : '',
-    dropdownColor : '',
+    selectedStatus: "",
+    secondStatus: "",
+    thirdStatus: "",
+    dropdownColor: "",
   });
 
   useEffect(() => {
-    fetch("http://localhost:3001/orders")
+    fetch("https://damp-eyrie-90120.herokuapp.com/orders")
       .then((response) => response.json())
-      .then((data) => setServices(data));
-  }, [services,id]);
+      .then((data) => setServices(data))
+      .catch(err =>{
+        
+      })
+  }, [services]);
 
-  const handleBlur = (e,id) => {
-    if(e.target.value === 'Pending'){
+
+  const handleBlur = (e, id) => {
+    if (e.target.value === "Pending") {
       const newData = {
-        selectedStatus : e.target.value,
-        secondStatus : 'Done',
-        thirdStatus : 'Ongonig',
-        dropdownColor : 'red',
+        selectedStatus: e.target.value,
+        secondStatus: "Done",
+        thirdStatus: "Ongonig",
+        dropdownColor: "red",
       };
       setUpdatedData(newData);
       setId(id);
-    }else if(e.target.value === 'Done'){
+    } else if (e.target.value === "Done") {
       const newData = {
-        selectedStatus : e.target.value,
-        secondStatus : 'Ongoing',
-        thirdStatus : 'Pending',
-        dropdownColor : 'green',
+        selectedStatus: e.target.value,
+        secondStatus: "Ongoing",
+        thirdStatus: "Pending",
+        dropdownColor: "green",
       };
       setUpdatedData(newData);
       setId(id);
-    }else if(e.target.value === 'Ongoing'){
+    } else if (e.target.value === "Ongoing") {
       const newData = {
-        selectedStatus : e.target.value,
-        secondStatus : 'Pending',
-        thirdStatus : 'Done',
-        dropdownColor : 'orange',
+        selectedStatus: e.target.value,
+        secondStatus: "Pending",
+        thirdStatus: "Done",
+        dropdownColor: "orange",
       };
       setUpdatedData(newData);
       setId(id);
     }
-    console.log(id)
-    
+    console.log(id);
   };
 
-  useEffect(()=>{
-    console.log(updatedData.selectedStatus);
+  useEffect(() => {
 
     const bodydata = {
-      selectedStatus : updatedData.selectedStatus,
-      secondStatus : updatedData.secondStatus,
-      thirdStatus : updatedData.thirdStatus,
-      dropdownColor : updatedData.dropdownColor,
+      selectedStatus: updatedData.selectedStatus,
+      secondStatus: updatedData.secondStatus,
+      thirdStatus: updatedData.thirdStatus,
+      dropdownColor: updatedData.dropdownColor,
+    };
+    console.log(updatedData.selectedStatus);
+
+    try {
+      fetch(`https://damp-eyrie-90120.herokuapp.com/updateStatus/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bodydata),
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("status updated");
+          if (result) {
+            alert("status updated");
+          }
+        })
+        .catch(err =>{
+          // alert(err);
+        })
+        
+    } catch (err) {
+      alert(err);
     }
-
-    fetch(`http://localhost:3001/updateStatus/${id}` , {
-      method : 'PATCH',
-      headers : { 'Content-Type' : 'application/json'},
-      body : JSON.stringify(bodydata)
-   })
-   .then(response => response.json())
-   .then(result => {
-      console.log('status updated');
-      if(result){
-          alert('status updated');
-      }
-   })
-
-  },[id]);
+  }, [id]);
 
   return (
     <section className="container">
@@ -85,9 +95,7 @@ export const Service = () => {
         </div>
         <div style={{ backgroundColor: "#F4F7FC" }} className="col-md-10 p-4">
           <div style={{ borderRadius: "10px" }} className="p-2 bg-white">
-            <table
-              className="table table-borderless"
-            >
+            <table className="table table-borderless">
               <thead style={{ borderRadius: "20px" }} className="bg-light ">
                 <tr>
                   <th className="text-secondary  p-2" scope="col">
@@ -116,12 +124,21 @@ export const Service = () => {
                         placeholder="status"
                         className="form-control"
                         name="status"
-                        onBlur={e => handleBlur(e,service._id)}
-                        style={{ border: "none", color: `${service.statusColor}` }}
+                        onBlur={(e) => handleBlur(e, service._id)}
+                        style={{
+                          border: "none",
+                          color: `${service.statusColor}`,
+                        }}
                       >
-                        <option value={service.status.selectedStatus}>{service.status.selectedStatus}</option>
-                        <option value={service.status.secondStatus}>{service.status.secondStatus}</option>
-                        <option value={service.status.thirdStatus}>{service.status.thirdStatus}</option>
+                        <option value={service.status.selectedStatus}>
+                          {service.status.selectedStatus}
+                        </option>
+                        <option value={service.status.secondStatus}>
+                          {service.status.secondStatus}
+                        </option>
+                        <option value={service.status.thirdStatus}>
+                          {service.status.thirdStatus}
+                        </option>
                       </select>
                     </td>
                   </tr>
