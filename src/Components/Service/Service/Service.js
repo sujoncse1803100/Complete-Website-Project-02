@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import Loader from "react-loader-spinner";
 import { OS_Header } from "../../Shared/OS_Header/OS_Header";
 import { ServiceSidebar } from "../ServiceSidebar/ServiceSidebar";
+import "../../../App.css";
 
 export const Service = () => {
   const [services, setServices] = useState([]);
-  const [id, setId] = useState('abcdesfghsdjf7e');
+  const [id, setId] = useState("abcdesfghsdjf7e");
   const [updatedData, setUpdatedData] = useState({
     selectedStatus: "",
     secondStatus: "",
@@ -16,11 +18,8 @@ export const Service = () => {
     fetch("https://damp-eyrie-90120.herokuapp.com/orders")
       .then((response) => response.json())
       .then((data) => setServices(data))
-      .catch(err =>{
-        
-      })
+      .catch((err) => {});
   }, [services]);
-
 
   const handleBlur = (e, id) => {
     if (e.target.value === "Pending") {
@@ -55,7 +54,6 @@ export const Service = () => {
   };
 
   useEffect(() => {
-
     const bodydata = {
       selectedStatus: updatedData.selectedStatus,
       secondStatus: updatedData.secondStatus,
@@ -77,10 +75,9 @@ export const Service = () => {
             alert("status updated");
           }
         })
-        .catch(err =>{
+        .catch((err) => {
           // alert(err);
-        })
-        
+        });
     } catch (err) {
       alert(err);
     }
@@ -145,6 +142,17 @@ export const Service = () => {
                 ))}
               </tbody>
             </table>
+            {!services.length && (
+                <div className="d-flex justify-content-center">
+                  <Loader
+                    className="m-2 "
+                    type="Oval"
+                    color="#00BFFF"
+                    height={50}
+                    width={50}
+                  />
+                </div>
+              )}
           </div>
         </div>
       </div>
